@@ -8,7 +8,7 @@ export default function Home({ landing }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const landingResponse = await fetcher("/landing");
   return {
     props: {
