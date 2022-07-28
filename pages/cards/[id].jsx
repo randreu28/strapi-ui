@@ -15,13 +15,13 @@ export default function Id({ card }) {
           />
           <div className="p-6">
             <div>
-              <span className="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">
+              <span className="text-xs font-medium text-blue-600 uppercase dark:text-blue-400 line-clamp-1">
                 {card.type}
               </span>
-              <h2 className="block mt-2 text-2xl font-semibold text-gray-800 dark:text-white">
+              <h2 className="block mt-2 text-2xl font-semibold text-gray-800 dark:text-white line-clamp-1">
                 {card.title}
               </h2>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
                 {card.description}
               </p>
             </div>
