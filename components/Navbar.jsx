@@ -2,6 +2,29 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function Navbar() {
+  //if the page has loaded and `document` exists
+  if (typeof window !== "undefined")
+    if (
+      //if there isn't any preference previously assigned
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList = "dark";
+    } else {
+      document.documentElement.classList = "light";
+    }
+
+  function toggleTheme() {
+    if (localStorage.theme == "light") {
+      localStorage.theme = "dark";
+      document.documentElement.classList = "dark";
+    } else {
+      localStorage.theme = "light";
+      document.documentElement.classList = "light";
+    }
+  }
+
   const router = useRouter();
   return (
     <nav className="bg-white shadow dark:bg-gray-800">
@@ -32,7 +55,7 @@ export default function Navbar() {
           href="https://github.com/randreu28/strapi-api"
           target="_blank"
           rel="noreferrer"
-          className="border-b-2 flex flex-row gap-2 border-transparent hover:text-gray-800 transition-colors duration-200 transform dark:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6"
+          className="hidden border-b-2 md:flex flex-row gap-2 border-transparent hover:text-gray-800 transition-colors duration-200 transform dark:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6"
         >
           <svg
             className="fill-current text-gray-800 dark:text-white"
@@ -49,7 +72,7 @@ export default function Navbar() {
           href="https://github.com/randreu28/strapi-ui"
           target="_blank"
           rel="noreferrer"
-          className="border-b-2 flex flex-row gap-2 border-transparent hover:text-gray-800 transition-colors duration-200 transform dark:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6"
+          className="hidden border-b-2 md:flex flex-row gap-2 border-transparent hover:text-gray-800 transition-colors duration-200 transform dark:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6"
         >
           <svg
             className="fill-current text-gray-800 dark:text-white"
@@ -62,6 +85,21 @@ export default function Navbar() {
           </svg>
           Next
         </a>
+
+        <button
+          className="flex flex-row gap-2 ml-10 sm:mx-6"
+          onClick={toggleTheme}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          </svg>
+          <span>Theme</span>
+        </button>
       </div>
     </nav>
   );
