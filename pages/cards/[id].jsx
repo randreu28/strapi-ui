@@ -90,5 +90,6 @@ export async function getStaticProps({ params }) {
     props: {
       card: parsedData,
     },
+    revalidate: 10,
   };
 }
