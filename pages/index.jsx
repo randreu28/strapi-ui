@@ -18,7 +18,7 @@ export default function Home({ landing }) {
         <h1 className="text-5xl font-bold">{landing.title}</h1>
         <p className="max-w-lg m-auto">{landing.description}</p>
         <button
-          disabled={landing.isStrapiCool ? true : false}
+          disabled={landing.isStrapyCool ? false : true}
           className="rounded bg-gray-800 dark:bg-white dark:text-gray-800 text-white px-3 py-2 duration-200 hover:bg-blue-500 disabled:hover:cursor-not-allowed"
           onClick={confeti}
         >
