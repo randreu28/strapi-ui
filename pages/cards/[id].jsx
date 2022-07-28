@@ -52,44 +52,31 @@ export default function Id({ card }) {
   );
 }
 
-export async function getStaticPaths() {
-  const cards = await fetcher("/cards");
+export async function getServerSideProps(context) {
+  const card = await fetcher(`/cards/${context.params.id}/?populate=*`);
 
-  const paths = cards.data.map((card) => {
+  if (!card.error) {
+    const user = await fetcher(
+      `/users/${card.data.attributes.user.data.id}/?populate=*`
+    );
+
+    let parsedData = {
+      title: card.data.attributes.title,
+      description: card.data.attributes.description,
+      date: card.data.attributes.date,
+      type: card.data.attributes.type.data.attributes.type,
+      image: card.data.attributes.image.data.attributes.url,
+      username: user.username,
+      avatar: user.avatar.url,
+    };
     return {
-      params: {
-        id: card.id.toString(),
+      props: {
+        card: parsedData,
       },
     };
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const card = await fetcher(`/cards/${params.id}/?populate=*`);
-  const user = await fetcher(
-    `/users/${card.data.attributes.user.data.id}/?populate=*`
-  );
-
-  let parsedData = {
-    title: card.data.attributes.title,
-    description: card.data.attributes.description,
-    date: card.data.attributes.date,
-    type: card.data.attributes.type.data.attributes.type,
-    image:
-      process.env.NEXT_PUBLIC_STRAPI_URL +
-      card.data.attributes.image.data.attributes.url,
-    username: user.username,
-    avatar: process.env.NEXT_PUBLIC_STRAPI_URL + user.avatar.url,
-  };
-  return {
-    props: {
-      card: parsedData,
-    },
-    revalidate: 10,
-  };
+  } else {
+    return {
+      notFound: true,
+    };
+  }
 }
