@@ -6,7 +6,7 @@ export default function Cards({ cards }) {
 
   return (
     <div className="p-10 space-y-8 flex flex-col">
-      <h1 className="text-center text-4xl font-bold dark:text-white">
+      <h1 className="text-center text-5xl font-bold dark:text-white">
         List of all cards
       </h1>
       {cards.map((card) => {
